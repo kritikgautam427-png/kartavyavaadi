@@ -9,8 +9,56 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as EditionsRouteImport } from './routes/editions'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CommitteesRouteImport } from './routes/committees'
+import { Route as AwardsRouteImport } from './routes/awards'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditionsRoute = EditionsRouteImport.update({
+  id: '/editions',
+  path: '/editions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommitteesRoute = CommitteesRouteImport.update({
+  id: '/committees',
+  path: '/committees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AwardsRoute = AwardsRouteImport.update({
+  id: '/awards',
+  path: '/awards',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +67,144 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/awards': typeof AwardsRoute
+  '/committees': typeof CommitteesRoute
+  '/contact': typeof ContactRoute
+  '/editions': typeof EditionsRoute
+  '/faq': typeof FaqRoute
+  '/register': typeof RegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/awards': typeof AwardsRoute
+  '/committees': typeof CommitteesRoute
+  '/contact': typeof ContactRoute
+  '/editions': typeof EditionsRoute
+  '/faq': typeof FaqRoute
+  '/register': typeof RegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/awards': typeof AwardsRoute
+  '/committees': typeof CommitteesRoute
+  '/contact': typeof ContactRoute
+  '/editions': typeof EditionsRoute
+  '/faq': typeof FaqRoute
+  '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/awards'
+    | '/committees'
+    | '/contact'
+    | '/editions'
+    | '/faq'
+    | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/awards'
+    | '/committees'
+    | '/contact'
+    | '/editions'
+    | '/faq'
+    | '/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/awards'
+    | '/committees'
+    | '/contact'
+    | '/editions'
+    | '/faq'
+    | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
+  AwardsRoute: typeof AwardsRoute
+  CommitteesRoute: typeof CommitteesRoute
+  ContactRoute: typeof ContactRoute
+  EditionsRoute: typeof EditionsRoute
+  FaqRoute: typeof FaqRoute
+  RegisterRoute: typeof RegisterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editions': {
+      id: '/editions'
+      path: '/editions'
+      fullPath: '/editions'
+      preLoaderRoute: typeof EditionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/committees': {
+      id: '/committees'
+      path: '/committees'
+      fullPath: '/committees'
+      preLoaderRoute: typeof CommitteesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/awards': {
+      id: '/awards'
+      path: '/awards'
+      fullPath: '/awards'
+      preLoaderRoute: typeof AwardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +217,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
+  AwardsRoute: AwardsRoute,
+  CommitteesRoute: CommitteesRoute,
+  ContactRoute: ContactRoute,
+  EditionsRoute: EditionsRoute,
+  FaqRoute: FaqRoute,
+  RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
