@@ -9,38 +9,279 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as EditionsRouteImport } from './routes/editions'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CommitteesRouteImport } from './routes/committees'
+import { Route as AwardsRouteImport } from './routes/awards'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedEbAssistantRouteImport } from './routes/_authenticated/eb.assistant'
+import { Route as AuthenticatedCommitteeCommitteeIdRouteImport } from './routes/_authenticated/committee.$committeeId'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminCmsRouteImport } from './routes/_authenticated/admin.cms'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditionsRoute = EditionsRouteImport.update({
+  id: '/editions',
+  path: '/editions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommitteesRoute = CommitteesRouteImport.update({
+  id: '/committees',
+  path: '/committees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AwardsRoute = AwardsRouteImport.update({
+  id: '/awards',
+  path: '/awards',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedEbAssistantRoute =
+  AuthenticatedEbAssistantRouteImport.update({
+    id: '/eb/assistant',
+    path: '/eb/assistant',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCommitteeCommitteeIdRoute =
+  AuthenticatedCommitteeCommitteeIdRouteImport.update({
+    id: '/committee/$committeeId',
+    path: '/committee/$committeeId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminCmsRoute = AuthenticatedAdminCmsRouteImport.update({
+  id: '/admin/cms',
+  path: '/admin/cms',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/awards': typeof AwardsRoute
+  '/committees': typeof CommitteesRoute
+  '/contact': typeof ContactRoute
+  '/editions': typeof EditionsRoute
+  '/faq': typeof FaqRoute
+  '/register': typeof RegisterRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin/cms': typeof AuthenticatedAdminCmsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/committee/$committeeId': typeof AuthenticatedCommitteeCommitteeIdRoute
+  '/eb/assistant': typeof AuthenticatedEbAssistantRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/awards': typeof AwardsRoute
+  '/committees': typeof CommitteesRoute
+  '/contact': typeof ContactRoute
+  '/editions': typeof EditionsRoute
+  '/faq': typeof FaqRoute
+  '/register': typeof RegisterRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin/cms': typeof AuthenticatedAdminCmsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/committee/$committeeId': typeof AuthenticatedCommitteeCommitteeIdRoute
+  '/eb/assistant': typeof AuthenticatedEbAssistantRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/awards': typeof AwardsRoute
+  '/committees': typeof CommitteesRoute
+  '/contact': typeof ContactRoute
+  '/editions': typeof EditionsRoute
+  '/faq': typeof FaqRoute
+  '/register': typeof RegisterRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/admin/cms': typeof AuthenticatedAdminCmsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/committee/$committeeId': typeof AuthenticatedCommitteeCommitteeIdRoute
+  '/_authenticated/eb/assistant': typeof AuthenticatedEbAssistantRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/awards'
+    | '/committees'
+    | '/contact'
+    | '/editions'
+    | '/faq'
+    | '/register'
+    | '/dashboard'
+    | '/admin/cms'
+    | '/admin/users'
+    | '/committee/$committeeId'
+    | '/eb/assistant'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/awards'
+    | '/committees'
+    | '/contact'
+    | '/editions'
+    | '/faq'
+    | '/register'
+    | '/dashboard'
+    | '/admin/cms'
+    | '/admin/users'
+    | '/committee/$committeeId'
+    | '/eb/assistant'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/about'
+    | '/auth'
+    | '/awards'
+    | '/committees'
+    | '/contact'
+    | '/editions'
+    | '/faq'
+    | '/register'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/admin/cms'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/committee/$committeeId'
+    | '/_authenticated/eb/assistant'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
+  AwardsRoute: typeof AwardsRoute
+  CommitteesRoute: typeof CommitteesRoute
+  ContactRoute: typeof ContactRoute
+  EditionsRoute: typeof EditionsRoute
+  FaqRoute: typeof FaqRoute
+  RegisterRoute: typeof RegisterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editions': {
+      id: '/editions'
+      path: '/editions'
+      fullPath: '/editions'
+      preLoaderRoute: typeof EditionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/committees': {
+      id: '/committees'
+      path: '/committees'
+      fullPath: '/committees'
+      preLoaderRoute: typeof CommitteesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/awards': {
+      id: '/awards'
+      path: '/awards'
+      fullPath: '/awards'
+      preLoaderRoute: typeof AwardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +289,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/eb/assistant': {
+      id: '/_authenticated/eb/assistant'
+      path: '/eb/assistant'
+      fullPath: '/eb/assistant'
+      preLoaderRoute: typeof AuthenticatedEbAssistantRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/committee/$committeeId': {
+      id: '/_authenticated/committee/$committeeId'
+      path: '/committee/$committeeId'
+      fullPath: '/committee/$committeeId'
+      preLoaderRoute: typeof AuthenticatedCommitteeCommitteeIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/cms': {
+      id: '/_authenticated/admin/cms'
+      path: '/admin/cms'
+      fullPath: '/admin/cms'
+      preLoaderRoute: typeof AuthenticatedAdminCmsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedAdminCmsRoute: typeof AuthenticatedAdminCmsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedCommitteeCommitteeIdRoute: typeof AuthenticatedCommitteeCommitteeIdRoute
+  AuthenticatedEbAssistantRoute: typeof AuthenticatedEbAssistantRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedAdminCmsRoute: AuthenticatedAdminCmsRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedCommitteeCommitteeIdRoute:
+    AuthenticatedCommitteeCommitteeIdRoute,
+  AuthenticatedEbAssistantRoute: AuthenticatedEbAssistantRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
+  AwardsRoute: AwardsRoute,
+  CommitteesRoute: CommitteesRoute,
+  ContactRoute: ContactRoute,
+  EditionsRoute: EditionsRoute,
+  FaqRoute: FaqRoute,
+  RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
