@@ -163,10 +163,112 @@ function CommitteePage() {
         </div>
         <aside className="space-y-6">
           <Leaderboard committeeId={committeeId} visibilityMode={visibility?.mode ?? "HIDDEN"} isEB={!!isEB} meUserId={me?.userId ?? null} />
+          {isEB && <JoinCodePanel committeeId={committeeId} joinCode={committee?.join_code ?? null} />}
+          {isEB && <RosterPanel committeeId={committeeId} portfolios={portfolios ?? []} />}
           {isEB && <EBSettings committeeId={committeeId} />}
         </aside>
       </div>
     </DashboardShell>
+  );
+}
+
+function JoinCodePanel({ committeeId, joinCode }: { committeeId: string; joinCode: string | null }) {
+  const rotate = useServerFn(rotateJoinCode);
+  const qc = useQueryClient();
+  const [busy, setBusy] = useState(false);
+  const doRotate = async () => {
+    setBusy(true);
+    try {
+      await rotate({ data: { committee_id: committeeId } });
+      toast.success("New join code generated");
+      qc.invalidateQueries({ queryKey: ["committee", committeeId] });
+    } catch (e: any) {
+      toast.error(e?.message ?? "Failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+  const copy = async () => {
+    if (!joinCode) return;
+    await navigator.clipboard.writeText(joinCode);
+    toast.success("Copied");
+  };
+  return (
+    <div className="rounded-sm border border-border bg-card p-6">
+      <div className="flex items-center gap-2">
+        <KeyRound className="h-4 w-4 text-primary" />
+        <h2 className="font-display text-xl">Join code</h2>
+      </div>
+      <p className="mt-2 text-xs text-muted-foreground">
+        Share this with delegates. They enter the code on their dashboard with their portfolio name to join.
+      </p>
+      <div className="mt-4 flex items-center gap-2">
+        <div className="flex-1 rounded-sm border border-dashed border-border bg-secondary/50 px-4 py-3 text-center font-mono text-2xl tracking-[0.32em]">
+          {joinCode ?? "— — — —"}
+        </div>
+        {joinCode && (
+          <button
+            onClick={copy}
+            title="Copy"
+            className="rounded-sm border border-border p-2.5 hover:bg-secondary"
+          >
+            <Copy className="h-4 w-4" />
+          </button>
+        )}
+      </div>
+      <button
+        onClick={doRotate}
+        disabled={busy}
+        className="mt-3 w-full rounded-sm bg-forest py-2 text-xs font-semibold uppercase tracking-wider text-ivory hover:opacity-90 disabled:opacity-50"
+      >
+        {busy ? "Generating…" : joinCode ? "Rotate code" : "Generate code"}
+      </button>
+    </div>
+  );
+}
+
+function RosterPanel({ committeeId, portfolios }: { committeeId: string; portfolios: any[] }) {
+  const remove = useServerFn(removeDelegateFromPortfolio);
+  const qc = useQueryClient();
+  const assigned = portfolios.filter((p) => p.delegate_user_id);
+  const doRemove = async (id: string, name: string) => {
+    if (!confirm(`Remove the delegate from "${name}"? The portfolio stays, but is freed up.`)) return;
+    try {
+      await remove({ data: { portfolio_id: id } });
+      toast.success("Delegate removed");
+      qc.invalidateQueries({ queryKey: ["portfolios", committeeId] });
+    } catch (e: any) {
+      toast.error(e?.message ?? "Failed");
+    }
+  };
+  return (
+    <div className="rounded-sm border border-border bg-card p-6">
+      <div className="flex items-center gap-2">
+        <Users className="h-4 w-4 text-primary" />
+        <h2 className="font-display text-xl">Roster</h2>
+        <span className="ml-auto text-xs text-muted-foreground">{assigned.length} delegates</span>
+      </div>
+      {!assigned.length && (
+        <p className="mt-3 text-xs text-muted-foreground">No delegates have joined yet.</p>
+      )}
+      <ul className="mt-3 space-y-1.5 text-sm">
+        {assigned.map((p) => (
+          <li
+            key={p.id}
+            className="flex items-center justify-between rounded-sm bg-secondary/40 px-3 py-2"
+          >
+            <span className="truncate">{p.name}</span>
+            <button
+              onClick={() => doRemove(p.id, p.name)}
+              title="Remove delegate"
+              className="inline-flex items-center gap-1 rounded-sm border border-border bg-background px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground hover:border-destructive hover:text-destructive"
+            >
+              <UserX className="h-3 w-3" /> Remove
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
