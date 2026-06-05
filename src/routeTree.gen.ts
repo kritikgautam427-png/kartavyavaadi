@@ -19,6 +19,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedEbAssistantRouteImport } from './routes/_authenticated/eb.assistant'
 import { Route as AuthenticatedCommitteeCommitteeIdRouteImport } from './routes/_authenticated/committee.$committeeId'
@@ -74,6 +75,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin/login': typeof AdminLoginRoute
   '/admin/cms': typeof AuthenticatedAdminCmsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/committee/$committeeId': typeof AuthenticatedCommitteeCommitteeIdRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin/login': typeof AdminLoginRoute
   '/admin/cms': typeof AuthenticatedAdminCmsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/committee/$committeeId': typeof AuthenticatedCommitteeCommitteeIdRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/register': typeof RegisterRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin/login': typeof AdminLoginRoute
   '/_authenticated/admin/cms': typeof AuthenticatedAdminCmsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/committee/$committeeId': typeof AuthenticatedCommitteeCommitteeIdRoute
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/register'
     | '/dashboard'
+    | '/admin/login'
     | '/admin/cms'
     | '/admin/users'
     | '/committee/$committeeId'
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/register'
     | '/dashboard'
+    | '/admin/login'
     | '/admin/cms'
     | '/admin/users'
     | '/committee/$committeeId'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/register'
     | '/_authenticated/dashboard'
+    | '/admin/login'
     | '/_authenticated/admin/cms'
     | '/_authenticated/admin/users'
     | '/_authenticated/committee/$committeeId'
@@ -215,6 +227,7 @@ export interface RootRouteChildren {
   EditionsRoute: typeof EditionsRoute
   FaqRoute: typeof FaqRoute
   RegisterRoute: typeof RegisterRoute
+  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -289,6 +302,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -358,7 +378,18 @@ const rootRouteChildren: RootRouteChildren = {
   EditionsRoute: EditionsRoute,
   FaqRoute: FaqRoute,
   RegisterRoute: RegisterRoute,
+  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
