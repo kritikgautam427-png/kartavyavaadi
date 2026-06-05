@@ -5,8 +5,9 @@ import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { DashboardShell, useMyRoles } from "@/components/DashboardShell";
 import { createChit, finalizeChitScore, rescoreChit } from "@/lib/chits.functions";
+import { rotateJoinCode, removeDelegateFromPortfolio } from "@/lib/committees.functions";
 import { toast } from "sonner";
-import { Trophy, Sparkles, Send, CheckCircle2, RefreshCw } from "lucide-react";
+import { Trophy, Sparkles, Send, CheckCircle2, RefreshCw, KeyRound, Users, UserX, Copy } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/committee/$committeeId")({
   component: CommitteePage,
