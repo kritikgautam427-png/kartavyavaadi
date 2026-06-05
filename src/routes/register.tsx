@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { PublicLayout, PageHero } from "@/components/Layout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { getRegistrationUrl } from "./committees";
+import { ExternalLink } from "lucide-react";
 
 export const Route = createFileRoute("/register")({
   head: () => ({
@@ -18,13 +19,7 @@ export const Route = createFileRoute("/register")({
 });
 
 function Register() {
-  const [email, setEmail] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
   const [committee, setCommittee] = useState<string>("");
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? null));
-  }, []);
 
   const { data: committees } = useQuery({
     queryKey: ["public_committees_simple"],
@@ -37,23 +32,8 @@ function Register() {
     },
   });
 
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) {
-      toast.error("Please sign in first to register.");
-      return;
-    }
-    if (!committee) {
-      toast.error("Pick a committee.");
-      return;
-    }
-    setSubmitting(true);
-    // Lightweight registration: just emails the user a confirmation toast.
-    // Real payment can be added later — record intent in profiles meta or a separate table.
-    await new Promise((r) => setTimeout(r, 400));
-    toast.success("Registration noted! Our team will reach out with payment details.");
-    setSubmitting(false);
-  };
+  const selected = committees?.find((c) => c.id === committee);
+  const url = getRegistrationUrl(selected?.name);
 
   return (
     <PublicLayout>
@@ -63,19 +43,10 @@ function Register() {
         subtitle="Limited slots available — secure your spot today."
       />
       <section className="mx-auto max-w-2xl px-6 py-20">
-        {!email && (
-          <div className="mb-6 rounded-sm border border-gold/40 bg-gold/10 p-5 text-sm">
-            You'll need to{" "}
-            <Link to="/auth" className="font-semibold underline">
-              sign in or create an account
-            </Link>{" "}
-            before registering. Once signed in, your delegate dashboard becomes available.
-          </div>
-        )}
-        <form onSubmit={submit} className="space-y-6 rounded-sm border border-border bg-card p-8">
+        <div className="space-y-6 rounded-sm border border-border bg-card p-8">
           <div>
             <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Committee
+              Pick your committee
             </label>
             <div className="mt-3 space-y-3">
               {committees?.map((c) => (
@@ -109,14 +80,32 @@ function Register() {
               ))}
             </div>
           </div>
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full rounded-sm bg-primary py-4 text-sm font-semibold uppercase tracking-wider text-primary-foreground hover:opacity-90 disabled:opacity-50"
+          <a
+            href={url ?? "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => {
+              if (!url) e.preventDefault();
+            }}
+            aria-disabled={!url}
+            className={`inline-flex w-full items-center justify-center gap-2 rounded-sm py-4 text-sm font-semibold uppercase tracking-wider ${
+              url
+                ? "bg-primary text-primary-foreground hover:opacity-90"
+                : "cursor-not-allowed bg-muted text-muted-foreground"
+            }`}
           >
-            {submitting ? "Submitting…" : "Reserve my spot"}
-          </button>
-        </form>
+            {url ? (
+              <>
+                Continue to registration <ExternalLink className="h-4 w-4" />
+              </>
+            ) : (
+              "Select a committee to continue"
+            )}
+          </a>
+          <p className="text-center text-xs text-muted-foreground">
+            Registration is handled via a secure Google Form. You'll be redirected.
+          </p>
+        </div>
       </section>
     </PublicLayout>
   );
