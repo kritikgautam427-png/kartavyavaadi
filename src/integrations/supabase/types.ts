@@ -181,6 +181,7 @@ export type Database = {
           description: string | null
           fee_inr: number | null
           id: string
+          join_code: string | null
           mode: string
           name: string
           short_name: string | null
@@ -192,6 +193,7 @@ export type Database = {
           description?: string | null
           fee_inr?: number | null
           id?: string
+          join_code?: string | null
           mode?: string
           name: string
           short_name?: string | null
@@ -203,6 +205,7 @@ export type Database = {
           description?: string | null
           fee_inr?: number | null
           id?: string
+          join_code?: string | null
           mode?: string
           name?: string
           short_name?: string | null
