@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { DashboardShell, RoleBadge, useMyRoles } from "@/components/DashboardShell";
-import { ArrowRight, MessagesSquare, Sparkles, Settings, KeyRound, LogIn } from "lucide-react";
+import { ArrowRight, MessagesSquare, Sparkles, Settings, KeyRound, LogIn, Megaphone, BookOpen, TrendingUp } from "lucide-react";
 import { useState } from "react";
 import { joinByCode } from "@/lib/committees.functions";
 import { toast } from "sonner";
