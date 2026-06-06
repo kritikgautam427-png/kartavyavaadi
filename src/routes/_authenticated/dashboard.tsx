@@ -90,9 +90,22 @@ function Dashboard() {
         </div>
       </div>
 
+      <AnnouncementsFeed />
+
       <JoinCommitteeCard
         onJoined={() => qc.invalidateQueries({ queryKey: ["my_committees"] })}
       />
+
+      <section className="mt-10 grid gap-3 md:grid-cols-2">
+        <Link to="/my/scores" className="group flex items-center justify-between rounded-sm border border-border bg-card p-5 hover:border-forest">
+          <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-sm bg-forest text-ivory"><TrendingUp className="h-5 w-5" /></div><div><div className="font-display text-xl">My score history</div><div className="text-xs text-muted-foreground">Cumulative + per-chit AI feedback</div></div></div>
+          <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
+        </Link>
+        <Link to="/resources" className="group flex items-center justify-between rounded-sm border border-border bg-card p-5 hover:border-forest">
+          <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-sm bg-forest text-ivory"><BookOpen className="h-5 w-5" /></div><div><div className="font-display text-xl">Resource library</div><div className="text-xs text-muted-foreground">Study guides, RoPs, templates</div></div></div>
+          <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
+        </Link>
+      </section>
 
       <section className="mt-12">
         <h2 className="font-display text-2xl">Your committees</h2>
