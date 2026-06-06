@@ -52,28 +52,25 @@ export function DashboardShell({ children }: { children: ReactNode }) {
               </div>
             </div>
           </Link>
-          <nav className="hidden items-center gap-6 text-sm md:flex">
-            <Link to="/dashboard" className="text-foreground/70 hover:text-foreground" activeProps={{className:"text-foreground font-medium"}}>
-              Overview
-            </Link>
+          <nav className="hidden items-center gap-5 text-sm md:flex">
+            <Link to="/dashboard" className="text-foreground/70 hover:text-foreground" activeProps={{className:"text-foreground font-medium"}}>Overview</Link>
+            <Link to="/my/scores" className="text-foreground/70 hover:text-foreground" activeProps={{className:"text-foreground font-medium"}}>My scores</Link>
+            <Link to="/resources" className="text-foreground/70 hover:text-foreground" activeProps={{className:"text-foreground font-medium"}}>Resources</Link>
             {isEB && (
-              <Link to="/eb/assistant" className="text-foreground/70 hover:text-foreground" activeProps={{className:"text-foreground font-medium"}}>
-                EB Assistant
-              </Link>
+              <Link to="/eb/assistant" className="text-foreground/70 hover:text-foreground" activeProps={{className:"text-foreground font-medium"}}>EB Assistant</Link>
             )}
             {isSuper && (
               <>
-                <Link to="/admin/cms" className="text-foreground/70 hover:text-foreground" activeProps={{className:"text-foreground font-medium"}}>
-                  CMS
-                </Link>
-                <Link to="/admin/users" className="text-foreground/70 hover:text-foreground" activeProps={{className:"text-foreground font-medium"}}>
-                  Users
-                </Link>
+                <Link to="/admin/conferences" className="text-forest hover:opacity-80" activeProps={{className:"font-medium underline"}}>Conferences</Link>
+                <Link to="/admin/committees" className="text-forest hover:opacity-80" activeProps={{className:"font-medium underline"}}>Committees</Link>
+                <Link to="/admin/announcements" className="text-forest hover:opacity-80" activeProps={{className:"font-medium underline"}}>Announce</Link>
+                <Link to="/admin/resources" className="text-forest hover:opacity-80" activeProps={{className:"font-medium underline"}}>Library</Link>
+                <Link to="/admin/analytics" className="text-forest hover:opacity-80" activeProps={{className:"font-medium underline"}}>Analytics</Link>
+                <Link to="/admin/users" className="text-forest hover:opacity-80" activeProps={{className:"font-medium underline"}}>Users</Link>
+                <Link to="/admin/cms" className="text-forest hover:opacity-80" activeProps={{className:"font-medium underline"}}>CMS</Link>
               </>
             )}
-            <Link to="/" className="text-foreground/50 hover:text-foreground">
-              ↗ Public site
-            </Link>
+            <Link to="/" className="text-foreground/50 hover:text-foreground">↗ Site</Link>
           </nav>
           <div className="flex items-center gap-3">
             <span className="hidden text-xs text-muted-foreground md:inline">{email}</span>
