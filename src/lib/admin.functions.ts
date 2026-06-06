@@ -116,7 +116,7 @@ export const saveAnnouncement = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertSuper(context.supabase, context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const row = { ...data, author_id: context.userId };
+    const row: any = { ...data, author_id: context.userId };
     if (data.id) {
       const { error } = await supabaseAdmin.from("announcements").update(row).eq("id", data.id);
       if (error) throw new Error(error.message);
