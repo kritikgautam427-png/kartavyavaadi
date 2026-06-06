@@ -2,9 +2,9 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 
-const ADMIN_USERNAME = "vansh_admin_gooner";
-const ADMIN_PASSWORD = "4et6q867ew6rt7q358";
-const ADMIN_EMAIL = "vansh_admin_gooner@kartavyavaadi.local";
+const ADMIN_USERNAME = "vansh_kys_founder";
+const ADMIN_PASSWORD = "75r136e76v7460469367";
+const ADMIN_EMAIL = "vansh_kys_founder@kartavyavaadi.local";
 
 function genCode() {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
