@@ -124,7 +124,7 @@ export const adminLogin = createServerFn({ method: "POST" })
         email: ADMIN_EMAIL,
         password: ADMIN_PASSWORD,
         email_confirm: true,
-        user_metadata: { display_name: "Vansh (Admin)" },
+        user_metadata: { display_name: "Vansh Wadhawan — Founder" },
       });
       if (error) throw new Error(error.message);
       user = created.user!;
