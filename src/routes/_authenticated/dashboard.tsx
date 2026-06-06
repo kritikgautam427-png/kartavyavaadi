@@ -252,3 +252,27 @@ function FeatureCard({ icon, title, body }: { icon: React.ReactNode; title: stri
     </div>
   );
 }
+
+function AnnouncementsFeed() {
+  const { data } = useQuery({
+    queryKey: ["delegate_announcements"],
+    queryFn: async () => (await supabase.from("announcements").select("*").order("created_at", { ascending: false }).limit(5)).data ?? [],
+  });
+  if (!data?.length) return null;
+  return (
+    <section className="mt-10">
+      <div className="mb-3 flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-forest">
+        <Megaphone className="h-3.5 w-3.5" /> Secretariat broadcasts
+      </div>
+      <div className="grid gap-3">
+        {data.map((a: any) => (
+          <div key={a.id} className="rounded-sm border-l-4 border-forest bg-card p-5 shadow-sm">
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{new Date(a.created_at).toLocaleString()}</div>
+            <h3 className="mt-1 font-display text-xl">{a.title}</h3>
+            <p className="mt-1 whitespace-pre-wrap text-sm">{a.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
