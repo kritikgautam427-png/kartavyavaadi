@@ -160,14 +160,15 @@ export const saveResource = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertSuper(context.supabase, context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const row: any = { ...data };
     if (data.id) {
-      const { error } = await supabaseAdmin.from("resources").update(data).eq("id", data.id);
+      const { error } = await supabaseAdmin.from("resources").update(row).eq("id", data.id);
       if (error) throw new Error(error.message);
       return { id: data.id };
     }
     const { data: ins, error } = await supabaseAdmin
       .from("resources")
-      .insert(data)
+      .insert(row)
       .select("id")
       .single();
     if (error) throw new Error(error.message);
