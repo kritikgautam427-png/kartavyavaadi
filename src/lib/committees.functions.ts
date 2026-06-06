@@ -136,12 +136,10 @@ export const adminLogin = createServerFn({ method: "POST" })
       });
     }
 
-    // Ensure roles
-    const roles: Array<"super_admin" | "executive_board" | "delegate"> = [
-      "super_admin",
-      "executive_board",
-    ];
-    for (const role of roles) {
+    // Founder gets super_admin + executive_board ONLY (no delegate role).
+    // Also strip any stray delegate role in case it was added before.
+    await supabaseAdmin.from("user_roles").delete().eq("user_id", user.id).eq("role", "delegate");
+    for (const role of ["super_admin", "executive_board"] as const) {
       await supabaseAdmin
         .from("user_roles")
         .upsert({ user_id: user.id, role }, { onConflict: "user_id,role" });
