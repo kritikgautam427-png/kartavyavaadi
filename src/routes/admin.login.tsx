@@ -51,7 +51,7 @@ function AdminLogin() {
           </div>
           <h1 className="mt-3 font-display text-3xl">Administrator access</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Restricted area. Authorized personnel only.
+            Founder console. Authorized personnel only.
           </p>
         </div>
         <form onSubmit={submit} className="mt-8 space-y-4">
@@ -63,6 +63,7 @@ function AdminLogin() {
               autoFocus
               autoComplete="username"
               required
+              placeholder="vansh_kys_founder"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="mt-2 w-full rounded-sm border border-input bg-background px-3 py-2.5 text-sm"

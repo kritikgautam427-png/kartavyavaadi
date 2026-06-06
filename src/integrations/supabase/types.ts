@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcements: {
+        Row: {
+          author_id: string | null
+          body: string
+          committee_id: string | null
+          created_at: string
+          id: string
+          scope: string
+          title: string
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          committee_id?: string | null
+          created_at?: string
+          id?: string
+          scope?: string
+          title: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          committee_id?: string | null
+          created_at?: string
+          id?: string
+          scope?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "announcements_committee_id_fkey"
+            columns: ["committee_id"]
+            isOneToOne: false
+            referencedRelation: "committees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chit_scores: {
         Row: {
           ai_breakdown: Json | null
@@ -311,6 +349,44 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      resources: {
+        Row: {
+          category: string
+          committee_id: string | null
+          created_at: string
+          description: string | null
+          id: string
+          title: string
+          url: string
+        }
+        Insert: {
+          category?: string
+          committee_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          title: string
+          url: string
+        }
+        Update: {
+          category?: string
+          committee_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          title?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resources_committee_id_fkey"
+            columns: ["committee_id"]
+            isOneToOne: false
+            referencedRelation: "committees"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       score_audit: {
         Row: {

@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { DashboardShell, RoleBadge, useMyRoles } from "@/components/DashboardShell";
-import { ArrowRight, MessagesSquare, Sparkles, Settings, KeyRound, LogIn } from "lucide-react";
+import { ArrowRight, MessagesSquare, Sparkles, Settings, KeyRound, LogIn, Megaphone, BookOpen, TrendingUp } from "lucide-react";
 import { useState } from "react";
 import { joinByCode } from "@/lib/committees.functions";
 import { toast } from "sonner";
@@ -90,9 +90,22 @@ function Dashboard() {
         </div>
       </div>
 
+      <AnnouncementsFeed />
+
       <JoinCommitteeCard
         onJoined={() => qc.invalidateQueries({ queryKey: ["my_committees"] })}
       />
+
+      <section className="mt-10 grid gap-3 md:grid-cols-2">
+        <Link to="/my/scores" className="group flex items-center justify-between rounded-sm border border-border bg-card p-5 hover:border-forest">
+          <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-sm bg-forest text-ivory"><TrendingUp className="h-5 w-5" /></div><div><div className="font-display text-xl">My score history</div><div className="text-xs text-muted-foreground">Cumulative + per-chit AI feedback</div></div></div>
+          <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
+        </Link>
+        <Link to="/resources" className="group flex items-center justify-between rounded-sm border border-border bg-card p-5 hover:border-forest">
+          <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-sm bg-forest text-ivory"><BookOpen className="h-5 w-5" /></div><div><div className="font-display text-xl">Resource library</div><div className="text-xs text-muted-foreground">Study guides, RoPs, templates</div></div></div>
+          <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
+        </Link>
+      </section>
 
       <section className="mt-12">
         <h2 className="font-display text-2xl">Your committees</h2>
@@ -237,5 +250,29 @@ function FeatureCard({ icon, title, body }: { icon: React.ReactNode; title: stri
       <h3 className="mt-4 font-display text-xl font-semibold">{title}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{body}</p>
     </div>
+  );
+}
+
+function AnnouncementsFeed() {
+  const { data } = useQuery({
+    queryKey: ["delegate_announcements"],
+    queryFn: async () => (await supabase.from("announcements").select("*").order("created_at", { ascending: false }).limit(5)).data ?? [],
+  });
+  if (!data?.length) return null;
+  return (
+    <section className="mt-10">
+      <div className="mb-3 flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-forest">
+        <Megaphone className="h-3.5 w-3.5" /> Secretariat broadcasts
+      </div>
+      <div className="grid gap-3">
+        {data.map((a: any) => (
+          <div key={a.id} className="rounded-sm border-l-4 border-forest bg-card p-5 shadow-sm">
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{new Date(a.created_at).toLocaleString()}</div>
+            <h3 className="mt-1 font-display text-xl">{a.title}</h3>
+            <p className="mt-1 whitespace-pre-wrap text-sm">{a.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

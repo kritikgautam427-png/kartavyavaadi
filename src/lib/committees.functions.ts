@@ -2,9 +2,9 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 
-const ADMIN_USERNAME = "vansh_admin_gooner";
-const ADMIN_PASSWORD = "4et6q867ew6rt7q358";
-const ADMIN_EMAIL = "vansh_admin_gooner@kartavyavaadi.local";
+const ADMIN_USERNAME = "vansh_kys_founder";
+const ADMIN_PASSWORD = "75r136e76v7460469367";
+const ADMIN_EMAIL = "vansh_kys_founder@kartavyavaadi.local";
 
 function genCode() {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -124,7 +124,7 @@ export const adminLogin = createServerFn({ method: "POST" })
         email: ADMIN_EMAIL,
         password: ADMIN_PASSWORD,
         email_confirm: true,
-        user_metadata: { display_name: "Vansh (Admin)" },
+        user_metadata: { display_name: "Vansh Wadhawan — Founder" },
       });
       if (error) throw new Error(error.message);
       user = created.user!;
@@ -136,12 +136,10 @@ export const adminLogin = createServerFn({ method: "POST" })
       });
     }
 
-    // Ensure roles
-    const roles: Array<"super_admin" | "executive_board" | "delegate"> = [
-      "super_admin",
-      "executive_board",
-    ];
-    for (const role of roles) {
+    // Founder gets super_admin + executive_board ONLY (no delegate role).
+    // Also strip any stray delegate role in case it was added before.
+    await supabaseAdmin.from("user_roles").delete().eq("user_id", user.id).eq("role", "delegate");
+    for (const role of ["super_admin", "executive_board"] as const) {
       await supabaseAdmin
         .from("user_roles")
         .upsert({ user_id: user.id, role }, { onConflict: "user_id,role" });
