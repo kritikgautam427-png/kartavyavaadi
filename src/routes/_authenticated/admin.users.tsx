@@ -81,16 +81,34 @@ function AdminUsers() {
   const toggleRole = async (userId: string, role: "super_admin" | "executive_board") => {
     const has = rolesByUser[userId]?.includes(role);
     if (has) {
-      await supabase.from("user_roles").delete().eq("user_id", userId).eq("role", role);
+      const { error } = await supabase.from("user_roles").delete().eq("user_id", userId).eq("role", role);
+      if (error) throw error;
     } else {
-      await supabase.from("user_roles").insert({ user_id: userId, role });
+      const { error } = await supabase.from("user_roles").insert({ user_id: userId, role });
+      if (error) throw error;
+
+      if (role === "super_admin") {
+        const [{ error: delegateError }, { error: portfolioError }] = await Promise.all([
+          supabase.from("user_roles").delete().eq("user_id", userId).eq("role", "delegate"),
+          supabase.from("portfolios").update({ delegate_user_id: null }).eq("delegate_user_id", userId),
+        ]);
+        if (delegateError) throw delegateError;
+        if (portfolioError) throw portfolioError;
+      }
     }
     toast.success("Role updated");
     qc.invalidateQueries({ queryKey: ["all_roles"] });
+    qc.invalidateQueries({ queryKey: ["all_portfolios"] });
   };
 
   const assignPortfolio = async (portfolioId: string, userId: string | null) => {
-    await supabase.from("portfolios").update({ delegate_user_id: userId }).eq("id", portfolioId);
+    if (userId && rolesByUser[userId]?.includes("super_admin")) {
+      toast.error("Super admins cannot be assigned delegate portfolios");
+      return;
+    }
+
+    const { error } = await supabase.from("portfolios").update({ delegate_user_id: userId }).eq("id", portfolioId);
+    if (error) throw error;
     toast.success("Portfolio updated");
     qc.invalidateQueries({ queryKey: ["all_portfolios"] });
   };
@@ -124,6 +142,7 @@ function AdminUsers() {
             <tbody className="divide-y divide-border bg-card">
               {profiles?.map((p) => {
                 const r = rolesByUser[p.id] ?? [];
+                const isSuperAdmin = r.includes("super_admin");
                 return (
                   <tr key={p.id}>
                     <td className="px-4 py-3">
@@ -149,6 +168,11 @@ function AdminUsers() {
                       </label>
                     </td>
                     <td className="px-4 py-3">
+                      {isSuperAdmin && (
+                        <div className="mb-2 text-[10px] uppercase tracking-wider text-muted-foreground">
+                          Super admins are not delegates.
+                        </div>
+                      )}
                       <div className="flex flex-wrap gap-2">
                         {committees?.map((c) => {
                           const on = ebMembership?.some(
@@ -199,11 +223,14 @@ function AdminUsers() {
                         className="rounded-sm border border-input bg-background px-2 py-1 text-xs"
                       >
                         <option value="">— Unassigned —</option>
-                        {profiles?.map((u) => (
-                          <option key={u.id} value={u.id}>
-                            {u.display_name} ({u.email})
-                          </option>
-                        ))}
+                        {profiles
+                          ?.filter((u) => p.delegate_user_id === u.id || !rolesByUser[u.id]?.includes("super_admin"))
+                          .map((u) => (
+                            <option key={u.id} value={u.id} disabled={rolesByUser[u.id]?.includes("super_admin")}>
+                              {u.display_name} ({u.email})
+                              {rolesByUser[u.id]?.includes("super_admin") ? " — Super Admin" : ""}
+                            </option>
+                          ))}
                       </select>
                     </li>
                   ))}

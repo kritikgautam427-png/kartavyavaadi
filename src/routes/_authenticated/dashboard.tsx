@@ -85,7 +85,7 @@ function Dashboard() {
           </h1>
           <div className="mt-3 flex flex-wrap gap-2">
             {me?.roles.map((r) => <RoleBadge key={r} role={r} />)}
-            {!me?.roles.length && <RoleBadge role="delegate" />}
+            {me && !me.roles.length && <RoleBadge role="delegate" />}
           </div>
         </div>
       </div>
