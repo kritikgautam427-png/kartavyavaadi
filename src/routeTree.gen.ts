@@ -20,11 +20,18 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AuthenticatedResourcesRouteImport } from './routes/_authenticated/resources'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedMyScoresRouteImport } from './routes/_authenticated/my.scores'
 import { Route as AuthenticatedEbAssistantRouteImport } from './routes/_authenticated/eb.assistant'
 import { Route as AuthenticatedCommitteeCommitteeIdRouteImport } from './routes/_authenticated/committee.$committeeId'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminResourcesRouteImport } from './routes/_authenticated/admin.resources'
+import { Route as AuthenticatedAdminConferencesRouteImport } from './routes/_authenticated/admin.conferences'
+import { Route as AuthenticatedAdminCommitteesRouteImport } from './routes/_authenticated/admin.committees'
 import { Route as AuthenticatedAdminCmsRouteImport } from './routes/_authenticated/admin.cms'
+import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
+import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -80,9 +87,19 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedResourcesRoute = AuthenticatedResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyScoresRoute = AuthenticatedMyScoresRouteImport.update({
+  id: '/my/scores',
+  path: '/my/scores',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedEbAssistantRoute =
@@ -102,11 +119,41 @@ const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminResourcesRoute =
+  AuthenticatedAdminResourcesRouteImport.update({
+    id: '/admin/resources',
+    path: '/admin/resources',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminConferencesRoute =
+  AuthenticatedAdminConferencesRouteImport.update({
+    id: '/admin/conferences',
+    path: '/admin/conferences',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminCommitteesRoute =
+  AuthenticatedAdminCommitteesRouteImport.update({
+    id: '/admin/committees',
+    path: '/admin/committees',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminCmsRoute = AuthenticatedAdminCmsRouteImport.update({
   id: '/admin/cms',
   path: '/admin/cms',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminAnnouncementsRoute =
+  AuthenticatedAdminAnnouncementsRouteImport.update({
+    id: '/admin/announcements',
+    path: '/admin/announcements',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminAnalyticsRoute =
+  AuthenticatedAdminAnalyticsRouteImport.update({
+    id: '/admin/analytics',
+    path: '/admin/analytics',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -119,11 +166,18 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/resources': typeof AuthenticatedResourcesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
+  '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/cms': typeof AuthenticatedAdminCmsRoute
+  '/admin/committees': typeof AuthenticatedAdminCommitteesRoute
+  '/admin/conferences': typeof AuthenticatedAdminConferencesRoute
+  '/admin/resources': typeof AuthenticatedAdminResourcesRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/committee/$committeeId': typeof AuthenticatedCommitteeCommitteeIdRoute
   '/eb/assistant': typeof AuthenticatedEbAssistantRoute
+  '/my/scores': typeof AuthenticatedMyScoresRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -136,11 +190,18 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/resources': typeof AuthenticatedResourcesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
+  '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/cms': typeof AuthenticatedAdminCmsRoute
+  '/admin/committees': typeof AuthenticatedAdminCommitteesRoute
+  '/admin/conferences': typeof AuthenticatedAdminConferencesRoute
+  '/admin/resources': typeof AuthenticatedAdminResourcesRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/committee/$committeeId': typeof AuthenticatedCommitteeCommitteeIdRoute
   '/eb/assistant': typeof AuthenticatedEbAssistantRoute
+  '/my/scores': typeof AuthenticatedMyScoresRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -155,11 +216,18 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/register': typeof RegisterRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/resources': typeof AuthenticatedResourcesRoute
   '/admin/login': typeof AdminLoginRoute
+  '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
+  '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/cms': typeof AuthenticatedAdminCmsRoute
+  '/_authenticated/admin/committees': typeof AuthenticatedAdminCommitteesRoute
+  '/_authenticated/admin/conferences': typeof AuthenticatedAdminConferencesRoute
+  '/_authenticated/admin/resources': typeof AuthenticatedAdminResourcesRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/committee/$committeeId': typeof AuthenticatedCommitteeCommitteeIdRoute
   '/_authenticated/eb/assistant': typeof AuthenticatedEbAssistantRoute
+  '/_authenticated/my/scores': typeof AuthenticatedMyScoresRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -174,11 +242,18 @@ export interface FileRouteTypes {
     | '/faq'
     | '/register'
     | '/dashboard'
+    | '/resources'
     | '/admin/login'
+    | '/admin/analytics'
+    | '/admin/announcements'
     | '/admin/cms'
+    | '/admin/committees'
+    | '/admin/conferences'
+    | '/admin/resources'
     | '/admin/users'
     | '/committee/$committeeId'
     | '/eb/assistant'
+    | '/my/scores'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -191,11 +266,18 @@ export interface FileRouteTypes {
     | '/faq'
     | '/register'
     | '/dashboard'
+    | '/resources'
     | '/admin/login'
+    | '/admin/analytics'
+    | '/admin/announcements'
     | '/admin/cms'
+    | '/admin/committees'
+    | '/admin/conferences'
+    | '/admin/resources'
     | '/admin/users'
     | '/committee/$committeeId'
     | '/eb/assistant'
+    | '/my/scores'
   id:
     | '__root__'
     | '/'
@@ -209,11 +291,18 @@ export interface FileRouteTypes {
     | '/faq'
     | '/register'
     | '/_authenticated/dashboard'
+    | '/_authenticated/resources'
     | '/admin/login'
+    | '/_authenticated/admin/analytics'
+    | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/cms'
+    | '/_authenticated/admin/committees'
+    | '/_authenticated/admin/conferences'
+    | '/_authenticated/admin/resources'
     | '/_authenticated/admin/users'
     | '/_authenticated/committee/$committeeId'
     | '/_authenticated/eb/assistant'
+    | '/_authenticated/my/scores'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -309,11 +398,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/resources': {
+      id: '/_authenticated/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof AuthenticatedResourcesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my/scores': {
+      id: '/_authenticated/my/scores'
+      path: '/my/scores'
+      fullPath: '/my/scores'
+      preLoaderRoute: typeof AuthenticatedMyScoresRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/eb/assistant': {
@@ -337,6 +440,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/resources': {
+      id: '/_authenticated/admin/resources'
+      path: '/admin/resources'
+      fullPath: '/admin/resources'
+      preLoaderRoute: typeof AuthenticatedAdminResourcesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/conferences': {
+      id: '/_authenticated/admin/conferences'
+      path: '/admin/conferences'
+      fullPath: '/admin/conferences'
+      preLoaderRoute: typeof AuthenticatedAdminConferencesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/committees': {
+      id: '/_authenticated/admin/committees'
+      path: '/admin/committees'
+      fullPath: '/admin/committees'
+      preLoaderRoute: typeof AuthenticatedAdminCommitteesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/cms': {
       id: '/_authenticated/admin/cms'
       path: '/admin/cms'
@@ -344,24 +468,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCmsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/announcements': {
+      id: '/_authenticated/admin/announcements'
+      path: '/admin/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AuthenticatedAdminAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/analytics': {
+      id: '/_authenticated/admin/analytics'
+      path: '/admin/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedResourcesRoute: typeof AuthenticatedResourcesRoute
+  AuthenticatedAdminAnalyticsRoute: typeof AuthenticatedAdminAnalyticsRoute
+  AuthenticatedAdminAnnouncementsRoute: typeof AuthenticatedAdminAnnouncementsRoute
   AuthenticatedAdminCmsRoute: typeof AuthenticatedAdminCmsRoute
+  AuthenticatedAdminCommitteesRoute: typeof AuthenticatedAdminCommitteesRoute
+  AuthenticatedAdminConferencesRoute: typeof AuthenticatedAdminConferencesRoute
+  AuthenticatedAdminResourcesRoute: typeof AuthenticatedAdminResourcesRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedCommitteeCommitteeIdRoute: typeof AuthenticatedCommitteeCommitteeIdRoute
   AuthenticatedEbAssistantRoute: typeof AuthenticatedEbAssistantRoute
+  AuthenticatedMyScoresRoute: typeof AuthenticatedMyScoresRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedResourcesRoute: AuthenticatedResourcesRoute,
+  AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
+  AuthenticatedAdminAnnouncementsRoute: AuthenticatedAdminAnnouncementsRoute,
   AuthenticatedAdminCmsRoute: AuthenticatedAdminCmsRoute,
+  AuthenticatedAdminCommitteesRoute: AuthenticatedAdminCommitteesRoute,
+  AuthenticatedAdminConferencesRoute: AuthenticatedAdminConferencesRoute,
+  AuthenticatedAdminResourcesRoute: AuthenticatedAdminResourcesRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedCommitteeCommitteeIdRoute:
     AuthenticatedCommitteeCommitteeIdRoute,
   AuthenticatedEbAssistantRoute: AuthenticatedEbAssistantRoute,
+  AuthenticatedMyScoresRoute: AuthenticatedMyScoresRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -383,3 +535,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
